@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸福小帮手家政 - 手绘风配套</title>
+    <!-- 引入中文手绘风与毛笔风字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fdf6e3;
+            --main-ink: #2b2b2b;
+            --highlight: #e76f51;
+            --accent1: #f4a261;
+            --accent2: #2a9d8f;
+            --box-shadow: rgba(43, 43, 43, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            /* 笔记本纸张纹理 */
+            background-image: 
+                linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+                linear-gradient(#eee .1em, transparent .1em);
+            background-size: 100% 1.2em;
+            color: var(--main-ink);
+            font-family: 'ZCOOL KuaiLe', cursive;
+            margin: 0;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 手绘风涂鸦装饰 */
+        .doodle-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.05;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M44.7,-76.4C58.3,-69.2,69.9,-56.3,78.2,-41.8C86.5,-27.3,91.6,-11.2,88.7,4.1C85.9,19.3,75.2,33.7,64.2,46.2C53.2,58.7,42,69.3,28.6,76.5C15.2,83.7,-0.4,87.6,-16.2,85.6C-31.9,83.5,-47.8,75.4,-61.4,64C-75.1,52.6,-86.5,37.8,-92.4,21C-98.3,4.2,-98.6,-14.6,-92.4,-31.2C-86.2,-47.8,-73.4,-62.1,-58.5,-69.2C-43.6,-76.3,-26.6,-76.3,-9.8,-72C7,-67.7,24,-59.1,44.7,-76.4Z" transform="translate(100 100)"/></svg>');
+        }
+
+        /* 顶部标题区 */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Zhi Mang Xing', cursive;
+            font-size: 5.5rem;
+            margin: 0;
+            color: var(--main-ink);
+            text-shadow: 4px 4px 0px var(--accent1);
+            transform: rotate(-2deg);
+            letter-spacing: 5px;
+        }
+
+        .header h1::after {
+            content: '';
+            display: block;
+            width: 80%;
+            height: 15px;
+            background: var(--highlight);
+            margin: -25px auto 0;
+            border-radius: 50%;
+            opacity: 0.7;
+            transform: rotate(2deg);
+            z-index: -1;
+            position: relative;
+        }
+
+        .header p {
+            font-size: 1.8rem;
+            margin-top: 25px;
+            color: var(--main-ink);
+            border-bottom: 4px dashed var(--accent2);
+            display: inline-block;
+            padding-bottom: 5px;
+            transform: rotate(1deg);
+        }
+
+        /* 配套卡片容器 */
+        .packages {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1300px;
+        }
+
+        /* 单个卡片的手绘边框效果 */
+        .card {
+            background: #fff;
+            width: 320px;
+            padding: 25px 25px 35px;
+            /* 手绘不规则边框 */
+            border: 5px solid var(--main-ink);
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            box-shadow: 12px 12px 0px var(--main-ink);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) rotate(3deg);
+            border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+            box-shadow: 15px 15px 0px var(--highlight);
+        }
+
+        /* 插画图片 */
+        .card-img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: -15px;
+            z-index: 2;
+            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));
+            transition: transform 0.3s;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .card-title {
+            font-size: 2.2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--main-ink);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            width: 100%;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .card-content {
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .card-content ul {
+            list-style: none;
+            padding: 0;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .card-content ul li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+        }
+
+        /* 手绘风格项目符号 */
+        .card-content ul li::before {
+            content: '✨';
+            position: absolute;
+            left: 5px;
+            color: var(--accent2);
+            font-size: 1.2rem;
+        }
+
+        .price-tag {
+            text-align: center;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-weight: bold;
+            font-size: 2.5rem;
+            margin-top: 20px;
+            color: #fff;
+            background: var(--main-ink);
+            padding: 5px 20px;
+            border-radius: 5px 25px 5px 25px;
+            transform: rotate(-3deg);
+            box-shadow: 6px 6px 0px var(--accent1);
+            align-self: center;
+        }
+
+        .card:nth-child(1) .price-tag { background: var(--accent2); box-shadow: 6px 6px 0px var(--main-ink); }
+        .card:nth-child(2) .price-tag { background: var(--accent1); box-shadow: 6px 6px 0px var(--main-ink); }
+        .card:nth-child(3) .price-tag { background: var(--highlight); box-shadow: 6px 6px 0px var(--main-ink); }
+
+        /* 底部行动呼吁 (CTA) */
+        .cta-section {
+            margin-top: 80px;
+            text-align: center;
+            background: #fff;
+            color: var(--main-ink);
+            padding: 50px 70px;
+            /* 手绘风便签 */
+            border: 6px solid var(--main-ink);
+            border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+            transform: rotate(-1.5deg);
+            box-shadow: -15px 15px 0px var(--highlight);
+            position: relative;
+        }
+
+        /* 胶带效果 */
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+            width: 150px;
+            height: 40px;
+            background-color: rgba(255, 235, 153, 0.8);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .cta-text {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            font-family: 'Zhi Mang Xing', cursive;
+        }
+
+        .cta-number {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 5.5rem;
+            color: var(--main-ink);
+            text-shadow: 4px 4px 0px var(--accent1);
+            letter-spacing: 5px;
+            display: inline-block;
+            animation: ring 2.5s infinite ease-in-out;
+            cursor: pointer;
+            border-bottom: 8px solid var(--highlight);
+        }
+
+        @keyframes ring {
+            0%, 100% { transform: scale(1) rotate(-2deg); }
+            50% { transform: scale(1.05) rotate(2deg); }
+        }
+
+        /* 装饰性小物件 */
+        .deco {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.9;
+        }
+        .deco1 { top: -30px; right: -25px; transform: rotate(25deg); }
+        .deco2 { bottom: -25px; left: -30px; transform: rotate(-20deg); }
+        .deco3 { top: -35px; left: -15px; transform: rotate(-30deg); }
+
+        @media (max-width: 900px) {
+            .packages { padding: 0 10px; gap: 30px; }
+            .header h1 { font-size: 4rem; }
+            .header p { font-size: 1.4rem; }
+            .cta-number { font-size: 4rem; }
+            .cta-section { padding: 40px 30px; }
+            .form-row { flex-direction: column; gap: 15px; }
+        }
+
+        /* 区域标题通用 */
+        .section-title {
+            text-align: center;
+            margin: 80px 0 40px;
+            font-family: 'Zhi Mang Xing', cursive;
+            font-size: 3.5rem;
+            color: var(--main-ink);
+            position: relative;
+            display: inline-block;
+            transform: rotate(-1deg);
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: -10px;
+            right: -10px;
+            height: 12px;
+            background-color: var(--accent1);
+            z-index: -1;
+            border-radius: 10px;
+            opacity: 0.6;
+        }
+
+        /* 预约表单区域 */
+        .booking-section {
+            background: #fff;
+            padding: 40px 50px;
+            border: 4px solid var(--main-ink);
+            border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+            box-shadow: 12px 12px 0px var(--accent2);
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        .booking-section .doodle-pin {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+        }
+        .form-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 20px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 1.2rem;
+            color: var(--main-ink);
+            background: rgba(255,255,255,0.8);
+            border: 3px solid var(--main-ink);
+            border-radius: 10px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .form-control:focus {
+            border-color: var(--highlight);
+            box-shadow: 4px 4px 0px var(--highlight);
+        }
+
+        /* 选定女佣列表 */
+        .maid-selector {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .maid-card {
+            border: 3px dashed var(--main-ink);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 150px;
+            background: #fafafa;
+            position: relative;
+        }
+        .maid-card:hover, .maid-card.active {
+            border-style: solid;
+            background: var(--bg-color);
+            transform: translateY(-5px);
+            box-shadow: 6px 6px 0px var(--accent1);
+            border-color: var(--highlight);
+        }
+        .maid-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--main-ink);
+            margin-bottom: 10px;
+            object-fit: cover;
+            background: #fff;
+        }
+        .maid-name { font-size: 1.5rem; font-weight: bold; }
+        .maid-status { font-size: 1rem; color: #666; margin-top: 5px; }
+        .maid-status.busy { color: var(--highlight); }
+        .maid-status.free { color: var(--accent2); }
+
+        /* 评价区域 */
+        .reviews-section {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin-bottom: 30px;
+        }
+        .review-card {
+            background: #fff;
+            width: 320px;
+            padding: 30px 25px;
+            border: 3px solid var(--main-ink);
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            position: relative;
+            box-shadow: -8px 8px 0px rgba(0,0,0,0.1);
+        }
+        .review-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+        .review-card:nth-child(odd) {
+            transform: rotate(-2deg);
+        }
+        .review-card::before {
+            content: '❝';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 4rem;
+            color: var(--accent1);
+            font-family: serif;
+            opacity: 0.5;
+            line-height: 1;
+        }
+        .review-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .review-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-top: 2px dashed #ddd;
+            padding-top: 15px;
+        }
+        .user-info .stars { color: #f4a261; font-size: 1.2rem; }
+        .user-info .name { font-weight: bold; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+    <div class="doodle-bg"></div>
+
+    <div class="header">
+        <h1>幸福小帮手 · 您的专属家政</h1>
+        <p>把繁杂家务交给我们，把美好时光留给生活 🌸</p>
+    </div>
+
+    <div class="packages">
+        <!-- 钟点配套 -->
+        <div class="card">
+            <div class="deco deco1">🧹</div>
+            <img src="assets/sweeping_maid_1773221981994.png" alt="钟点尝鲜包" class="card-img" />
+            <div class="card-title">【轻享微光】<br>钟点尝鲜包</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>4小时</strong> 全屋深度大扫除</li>
+                    <li>焕然一新，适合周末应急</li>
+                    <li>自带全套环保清洁工具及溶剂</li>
+                    <li>无隐形收费，明码标价</li>
+                </ul>
+            </div>
+            <div class="price-tag">RM 120 / 次</div>
+        </div>
+
+        <!-- 月度配套 -->
+        <div class="card">
+            <div class="deco deco2">🫧</div>
+            <img src="assets/laundry_maid_1773221996578.png" alt="月度安心包" class="card-img" />
+            <div class="card-title">【日常拾光】<br>月度安心包</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>每周1次</strong>，每次4小时</li>
+                    <li>固定阿姨，最懂你的家庭习惯</li>
+                    <li>包含基本收纳与洗衣晾晒</li>
+                    <li>附赠每月1次免费衣物熨烫</li>
+                </ul>
+            </div>
+            <div class="price-tag">RM 450 / 月</div>
+        </div>
+
+        <!-- 全职配套 -->
+        <div class="card">
+            <div class="deco deco3">🏡</div>
+            <img src="assets/cooking_maid_1773222009676.png" alt="全职金牌包" class="card-img" />
+            <div class="card-title">【岁月长明】<br>全职管家包</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>全职/住家</strong> 女佣管家</li>
+                    <li>包办三餐、保洁与基础看护</li>
+                    <li>背景严选与3个月专业岗前培训</li>
+                    <li>超长试用期，不满意免费包换</li>
+                </ul>
+            </div>
+            <div class="price-tag">定制报价</div>
+        </div>
+    </div>
+
+    <!-- 预约系统 -->
+    <div style="text-align: center; width: 100%;">
+        <div class="section-title">🌸 呼叫专属清洁精灵 🌸</div>
+    </div>
+    <div class="booking-section">
+        <div class="doodle-pin">📌</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>📍 选择魔法降临地点</label>
+                <select class="form-control">
+                    <option value="">请选择打扫区域...</option>
+                    <option value="KL">吉隆坡 (Kuala Lumpur)</option>
+                    <option value="PJ">八打灵再也 (Petaling Jaya)</option>
+                    <option value="SJ">梳邦再也 (Subang Jaya)</option>
+                    <option value="PU">蒲种 (Puchong)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>⏰ 期待降临时间</label>
+                <input type="datetime-local" class="form-control" value="2026-03-12T09:00">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>🧚‍♀️ 挑选今日当值精灵</label>
+            <div class="maid-selector">
+                <div class="maid-card">
+                    <img src="assets/maid_avatar_1_1773222346120.png" class="maid-avatar">
+                    <div class="maid-name">小樱 (Sakura)</div>
+                    <div class="maid-status busy">🧹 正在执行任务<br>(预计 14:00 结束)</div>
+                </div>
+                <div class="maid-card active">
+                    <img src="assets/maid_avatar_2_1773222498590.png" class="maid-avatar">
+                    <div class="maid-name">美玲 (Mei Ling)</div>
+                    <div class="maid-status free">✨ 空闲中<br>随时待命，马上出发</div>
+                </div>
+                <div class="maid-card">
+                    <img src="assets/maid_avatar_3_1773222519566.png" class="maid-avatar">
+                    <div class="maid-name">阿雅 (Aya)</div>
+                    <div class="maid-status free">✨ 空闲中<br>随时待命，马上出发</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户评价 -->
+    <div style="text-align: center; width: 100%;">
+        <div class="section-title">📝 主顾真实手记 📝</div>
+    </div>
+    <div class="reviews-section">
+        <div class="review-card">
+            <div class="review-text">小樱和阿雅两位精灵太给力了！角落里的陈年灰尘都扫得一干二净，手绘客服页面太可爱了，连我们家狗狗都喜欢她们！</div>
+            <div class="review-user">
+                <div class="user-info">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="name">陈太太 (PJ区)</div>
+                </div>
+            </div>
+        </div>
+        <div class="review-card">
+            <div class="review-text">美玲做饭太好吃啦😭，现在全职在我们家已经第二个月，把我和老公的胃治得服服帖帖的。中介服务也很透明，必须推荐！</div>
+            <div class="review-user">
+                <div class="user-info">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="name">王先生 (KL区)</div>
+                </div>
+            </div>
+        </div>
+        <div class="review-card">
+            <div class="review-text">钟点配套用来应付我妈突击检查简直是神器！阿雅动作超级麻利，两个小时就把客厅和厨房焕然一新，爱了爱了！</div>
+            <div class="review-user">
+                <div class="user-info">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="name">林小姐 (Subang区)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA 区域 -->
+    <div class="cta-section">
+        <div class="cta-text">马上召唤您的专属清洁小精灵！让家恢复温馨模样 💖</div>
+        <div class="cta-number">📞 012-3456789</div>
+    </div>
+
+</body>
+</html>
